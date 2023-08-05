@@ -1,0 +1,316 @@
+# Practical_4 😶‍🌫️
+
+### 1 . Create a file named ‘file1.txt’ and write a list of comma-separated numbers in it, such as 10, 20, 30, 40. Implement a function that reads the content of file1.txt file using the fs module and calculates the following statistics:
+
+```js filename="P4_1.js"   copy
+/const fs = require('fs');
+
+// Step 1: Write numbers to 'file1.txt'
+const numbers = '10,20,30,40';
+
+fs.writeFile('file1.txt', numbers, 'utf8', (err) => {
+  if (err) {
+    console.error('Error writing to file:', err);
+  } else {
+    console.log('Numbers were written to file1.txt.');
+
+    // Step 2: Read and calculate statistics from 'file1.txt'
+    calculateStatistics();
+  }
+});
+
+function calculateStatistics() {
+  fs.readFile('file1.txt', 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading file:', err);
+    } else {
+      const numbersArray = data.split(',').map(Number);
+      const sum = numbersArray.reduce((acc, num) => acc + num, 0);
+      const average = sum / numbersArray.length;
+      const max = Math.max(...numbersArray);
+      const min = Math.min(...numbersArray);
+
+      console.log('Numbers:', numbersArray);
+      console.log('Sum of all numbers:', sum);
+      console.log('Average of all numbers:', average);
+      console.log('Maximum number:', max);
+      console.log('Minimum number:', min);
+    }
+  });
+}
+
+
+```
+
+### 2 Create a module “TextProcessing” contain functions named countWords, countLines, countCharacters which takes a string as input from ‘file2.txt’ file and returns the total number of words, lines and characters in the console.
+
+```js filename="TextProcessing.js"   copy
+// TextProcessing.js
+
+const fs = require('fs');
+
+function countWords() {
+  fs.readFile('file2.txt', 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading file:', err);
+    } else {
+      const words = data.split(/\s+/).filter(word => word !== '');
+      console.log('Total words:', words.length);
+    }
+  });
+}
+
+function countLines() {
+  fs.readFile('file2.txt', 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading file:', err);
+    } else {
+      const lines = data.split('\n').filter(line => line.trim() !== '');
+      console.log('Total lines:', lines.length);
+    }
+  });
+}
+
+function countCharacters() {
+  fs.readFile('file2.txt', 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading file:', err);
+    } else {
+      const characters = data.replace(/\s/g, ''); // Remove all whitespace characters
+      console.log('Total characters:', characters.length);
+    }
+  });
+}
+
+module.exports = {
+  countWords,
+  countLines,
+  countCharacters,
+};
+
+
+```
+```js filename="P2_3.js"   copy
+// main.js
+
+const TextProcessing = require('./TextProcessing');
+
+TextProcessing.countWords();
+TextProcessing.countLines();
+TextProcessing.countCharacters();
+
+```
+
+### Differentiate between synchronous and asynchronous file operations with an example.
+
+```js filename="P2_3.js"   copy
+const fs = require('fs');
+
+// Synchronous file reading
+try {
+  const syncData = fs.readFileSync('file.txt', 'utf8');
+  console.log('Synchronous file read:');
+  console.log(syncData);
+} catch (err) {
+  console.error('Error reading file synchronously:', err);
+}
+
+// Asynchronous file reading
+fs.readFile('file.txt', 'utf8', (err, asyncData) => {
+  if (err) {
+    console.error('Error reading file asynchronously:', err);
+  } else {
+    console.log('\nAsynchronous file read:');
+    console.log(asyncData);
+  }
+});
+
+```
+
+### 4 Create a file named search.txt and write some text content in it, including a specific word. Implement a function that takes a search term as input and searches for occurrences of that term in the search.txt file using the fs module. Display the line numbers and positions of all occurrences of the search term in the console.
+```js filename="P4_4.js"   copy
+const fs = require('fs');
+
+// Step 1: Write content to 'search.txt'
+const content = `This is a sample text file.
+It contains multiple occurrences of the word "search".
+This is a search example in Node.js.`;
+
+fs.writeFile('search.txt', content, 'utf8', (err) => {
+  if (err) {
+    console.error('Error writing to file:', err);
+  } else {
+    console.log('Content was written to search.txt.');
+
+    // Step 2: Implement the search function
+    searchForTerm('search');
+  }
+});
+
+function searchForTerm(searchTerm) {
+  fs.readFile('search.txt', 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading file:', err);
+    } else {
+      const lines = data.split('\n');
+      let lineNum = 1;
+
+      console.log(`Occurrences of "${searchTerm}" in search.txt:`);
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        let pos = line.indexOf(searchTerm);
+
+        while (pos !== -1) {
+          console.log(`Line ${lineNum}, Position ${pos + 1}`);
+          pos = line.indexOf(searchTerm, pos + 1);
+        }
+
+        lineNum++;
+      }
+    }
+  });
+}
+
+```
+
+### 5 . Create a Node.js script that generates an HTML file (dynamic.html) dynamically. The HTML file should contain a table with data from an array of objects. Each object represents a person with properties like name, age, and city. Display the data in the table and style it with CSS.
+
+```js filename="p4_5.js" copy 
+const fs = require('fs');
+
+const peopleData = [
+  { name: 'John Doe', age: 30, city: 'New York' },
+  { name: 'Jane Smith', age: 25, city: 'London' },
+  { name: 'Bob Johnson', age: 28, city: 'San Francisco' },
+];
+
+const generateHTML = () => {
+  let tableRows = '';
+
+  for (const person of peopleData) {
+    tableRows += `<tr><td>${person.name}</td><td>${person.age}</td><td>${person.city}</td></tr>`;
+  }
+
+  const htmlContent = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Dynamic Table</title>
+        <style>
+          table {
+            border-collapse: collapse;
+            width: 50%;
+            margin: auto;
+            font-family: Arial, sans-serif;
+          }
+
+          th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+          }
+
+          th {
+            background-color: #f2f2f2;
+          }
+        </style>
+      </head>
+      <body>
+        <h1>Dynamic Table</h1>
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>City</th>
+          </tr>
+          ${tableRows}
+        </table>
+      </body>
+    </html>
+  `;
+
+  return htmlContent;
+};
+
+const htmlContent = generateHTML();
+
+fs.writeFile('dynamic.html', htmlContent, 'utf8', (err) => {
+  if (err) {
+    console.error('Error generating HTML file:', err);
+  } else {
+    console.log('dynamic.html file was generated successfully.');
+  }
+});
+
+```
+
+
+### 6 Perform basic file operations: a. Rename the existing file with the new name and display system’s error’s message if it doesn’t exist. b. Delete the existing file and display system’s error’s message if it doesn’t exist. c. Copy file into different directory. d. Create and remove directory. e. Append content in file.
+```js filename="p4_6.js" copy
+const fs = require('fs');
+const path = require('path');
+
+// File path of the existing file
+const filePath = 'existing_file.txt';
+
+// a. Rename the existing file with the new name
+const newFilePath = 'new_file.txt';
+fs.rename(filePath, newFilePath, (err) => {
+  if (err) {
+    console.error('Error renaming file:', err.message);
+  } else {
+    console.log('File renamed successfully.');
+  }
+});
+
+// b. Delete the existing file
+fs.unlink(filePath, (err) => {
+  if (err) {
+    console.error('Error deleting file:', err.message);
+  } else {
+    console.log('File deleted successfully.');
+  }
+});
+
+// c. Copy file into different directory
+const sourceFilePath = 'file.txt';
+const destinationDir = 'destination_directory';
+
+fs.copyFile(sourceFilePath, path.join(destinationDir, path.basename(sourceFilePath)), (err) => {
+  if (err) {
+    console.error('Error copying file:', err.message);
+  } else {
+    console.log('File copied successfully.');
+  }
+});
+
+// d. Create and remove directory
+const newDir = 'new_directory';
+
+fs.mkdir(newDir, (err) => {
+  if (err) {
+    console.error('Error creating directory:', err.message);
+  } else {
+    console.log('Directory created successfully.');
+
+    fs.rmdir(newDir, (err) => {
+      if (err) {
+        console.error('Error removing directory:', err.message);
+      } else {
+        console.log('Directory removed successfully.');
+      }
+    });
+  }
+});
+
+// e. Append content in file
+const contentToAppend = '\nThis content is appended to the file.';
+fs.appendFile(filePath, contentToAppend, 'utf8', (err) => {
+  if (err) {
+    console.error('Error appending content to file:', err.message);
+  } else {
+    console.log('Content appended successfully.');
+  }
+});
+
+```

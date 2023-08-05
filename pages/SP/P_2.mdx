@@ -1,0 +1,175 @@
+# Practical_2 😶‍🌫️
+
+### 1 Create Node.js application which allow users to perform basic mathematical operations such as addition, subtraction, multiplication, and division. 
+
+```js filename="P2_1.js"   copy
+// Parse command-line arguments
+const args = process.argv.slice(2);
+
+if (args.length != 3) {
+    console.log("Please provide 3 arguments: <number1> <operator> <number2>");
+    process.exit(1);
+}
+
+// Extract the arguments
+let num1 = parseFloat(args[0]);
+let operator = args[1];
+let num2 = parseFloat(args[2]);
+
+if (isNaN(num1) || isNaN(num2)) {
+    console.log("Invalid numbers provided. Please ensure you input numbers.");
+    process.exit(1);
+}
+
+// Perform the desired operation
+switch (operator) {
+    case '+':
+        console.log("Result: ", num1 + num2);
+        break;
+    case '-':
+        console.log("Result: ", num1 - num2);
+        break;
+    case '*':
+        console.log("Result: ", num1 * num2);
+        break;
+    case '/':
+        if (num2 == 0) {
+            console.log("Error: Division by zero is not allowed.");
+            process.exit(1);
+        } else {
+            console.log("Result: ", num1 / num2);
+        }
+        break;
+    default:
+        console.log("Invalid operator. Please use one of +, -, *, /");
+        process.exit(1);
+}
+
+```
+
+### 2 Write a node.js program to build a console application which allow users to perform  operations:
+
+
+```js filename="P2_2.js"   copy
+const readline = require('readline');
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+let contacts = [];
+
+const getContact = () => {
+    rl.question('Enter contact name: ', (name) => {
+        rl.question('Enter contact phone number: ', (phone) => {
+            if (phone.length !== 10) {
+                console.log('Phone number should be of 10 digits.');
+                getContact();
+            } else {
+                contacts.push({ name, phone });
+                console.log('Contact added successfully. Current Contacts: ');
+                console.log(contacts);
+                rl.close();
+            }
+        });
+    });
+};
+
+getContact();
+
+```
+
+### 3 Write a Node.js program to create an object named book using object literal syntax. Add book_title, author and publish_year as properties to the book object and assign it’s appropriate values. Now create function print_info() to print the book object to the console so the final output
+
+
+```js filename="P2_3.js"   copy
+const readline = require('readline');
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+const book = {};
+
+function getBookInfo() {
+    rl.question('Enter book title: ', (title) => {
+        rl.question('Enter author name: ', (author) => {
+            rl.question('Enter publish year: ', (publishYear) => {
+                book.book_title = title;
+                book.author = author;
+                book.publish_year = parseInt(publishYear);
+
+                print_info();
+
+                rl.close();
+            });
+        });
+    });
+}
+
+function print_info() {
+    console.log('-------------------------------------------------')
+    console.log(`title: ${book.book_title}`);
+    console.log(`author: ${book.author}`);
+    console.log(`publish_year: ${book.publish_year}`);
+}
+
+getBookInfo();
+
+```
+
+### 4 Create an array named products. Add objects to the array. Each object should be a single product, with 3 properties: name, inventory and unit_price. Create two functions named listProducts() and totalValue(). A listProducts() function accepts a parameter -- the array of products and it should return an array of the names of the products. A function named totalValue() should accept a parameter -- the array of products and it should return the total value of all of the products in the array. To calculate the total value of one product multiply the inventory value with the unit_price.
+```js filename="P2_4.js"   copy
+const readline = require('readline');
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+const products = [];
+
+function addProduct() {
+  rl.question('Enter product name: ', (name) => {
+    rl.question('Enter product inventory: ', (inventory) => {
+      rl.question('Enter product unit price: ', (unitPrice) => {
+        products.push({
+          name: name,
+          inventory: parseInt(inventory),
+          unit_price: parseFloat(unitPrice)
+        });
+
+        rl.question('Do you want to add another product? (yes/no): ', (answer) => {
+          if (answer.toLowerCase() === 'yes') {
+            addProduct();
+          } else {
+            rl.close();
+            printProductsInfo();
+          }
+        });
+      });
+    });
+  });
+}
+
+function listProducts(products) {
+  return products.map(product => product.name);
+}
+
+function totalValue(products) {
+  return products.reduce((total, product) => total + product.inventory * product.unit_price, 0);
+}
+
+function printProductsInfo() {
+  console.log('List of Products:');
+  console.log(listProducts(products));
+
+  console.log('\nTotal Value of Products:');
+  console.log(totalValue(products));
+}
+
+addProduct();
+
+```

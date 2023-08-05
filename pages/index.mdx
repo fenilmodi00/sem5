@@ -1,11 +1,55 @@
-# Introduction
- 
-Welcome to Nextra! This is a basic docs template. You can use it as a starting point for your own project :)
+import { Tabs, Tab } from 'nextra-theme-docs';
+import { Callout } from 'nextra-theme-docs';
+import Link from 'next/link'
+import Card, { Cards } from '../components/Card'
+import { inject } from '@vercel/analytics';
+import Ana from '../components/Ana'
 
-## What is Nextra?
+# Welcome to the ❔
 
-A **simple**, **powerful** and **flexible** site generation framework with everything you love from Next.js.
+Get top-quality coding solutions for all your assignments at our website. Our team of experts provide accurate and 
+efficient answers to complex coding problems. From basic to advanced level, we have solutions for all your coding 
+needs. Submit your assignments now and get top grades
 
-## Documentation
+Join the [Telegram community](https://t.me/sem4notes) for help along the way.
 
-The documentation is available at [https://nextra.site](https://nextra.site).
+
+<div className="mt-8">
+
+        <div className="mb-4 text-xl font-bold">Subjects</div>
+      
+      <Cards num={0}>
+
+      <Card
+          title="SP"
+          description="Node.js: Server-side JavaScript runtime. 👶"
+          icon="👼"
+          link="SP/P_2"
+        />
+
+        {/* <Card
+          title="DAA"
+          description="DAA is like a detective, it helps you solve complex algorithms and data structures as if you were solving a crime case.."
+          icon="🕵️‍♀️"
+          link="daa/P_1"
+        />
+        <Card
+          title="Python"
+          description="Python is like a snake, it may seem intimidating at first but once you get to know it, it'll slither its way into your heart."
+          icon="🐍"
+          link="python/P_2"
+        />
+        <Card
+          title="OS"
+          description="OS is like the conductor of an orchestra, it makes sure all the different parts of your computer are playing in harmony."
+          icon="🖥️"
+          link="os/P_2"
+        /> */}
+      </Cards>
+
+
+</div>
+
+<Callout type="warning" emoji="⚠️">
+  under construction
+</Callout>
