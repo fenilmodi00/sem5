@@ -1,6 +1,10 @@
 import React from 'react'
+import { inject } from '@vercel/analytics';
 import { DocsThemeConfig } from 'nextra-theme-docs'
 
+
+
+inject();
 const config: DocsThemeConfig = {
   logo: <span>My Project</span>,
   project: {
