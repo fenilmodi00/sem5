@@ -1,0 +1,71 @@
+# Practical_4 😶‍🌫️
+
+### 1 . Custom Logging with Timestamps Implement a custom logger using util.format and the fs.appendFile function. The logger should log messages with timestamps to a file named app.log. Each log message should include the current timestamp, severity level (e.g., info, warning, error), and the log message itself. 
+
+```js filename="P5_1.js"   copy
+const fs = require('fs');
+const util = require('util');
+
+const logFile = 'app.log';
+
+function log(level, message) {
+  const now = new Date();
+  const timestamp = now.toISOString();
+  const logMessage = util.format('%s [%s]: %s\n', timestamp, level.toUpperCase(), message);
+  fs.appendFile(logFile, logMessage, (err) => {
+    if (err) throw err;
+  });
+}
+
+function info(message) {
+  log('info', message);
+}
+
+function warn(message) {
+  log('warn', message);
+}
+
+function error(message) {
+  log('error', message);
+}
+
+info('Hello World!');
+
+```
+
+### 2.  Create a program that accepts a URL and extracts url components like domain name, path, protocol, query etc using the URL module. If file extension is ‘.js’ then shows all components on browser, otherwise shows “Incorrect File format” message on browser. 
+
+```js filename="P5_1.js"   copy
+const http = require('http');
+const url = require('url');
+const path = require('path');
+
+const server = http.createServer((req, res) => {
+  const inputUrl = `http://${req.headers.host}${req.url}`;
+  const parsedUrl = url.parse(inputUrl);
+  const extension = path.extname(parsedUrl.pathname);
+
+  if (extension === '.js') {
+    const components = {
+      protocol: parsedUrl.protocol,
+      hostname: parsedUrl.hostname,
+      path: parsedUrl.path,
+      query: parsedUrl.query,
+    };
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(components));
+  } else {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Incorrect File format');
+  }
+});
+
+const port = 3000;
+server.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}/`);
+});
+
+// http://localhost:3000/path/to/file.js
+```
+
+### 3 Use the path module to determine if a file path is an absolute path or a relative path. 
