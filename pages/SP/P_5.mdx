@@ -69,3 +69,77 @@ server.listen(port, () => {
 ```
 
 ### 3 Use the path module to determine if a file path is an absolute path or a relative path. 
+
+```js filename="P5_1.js"   copy
+const path = require('path');
+
+function determinePathType(filePath) {
+  const firstCharacter = filePath.charAt(0);
+  
+  if (firstCharacter === '/' || firstCharacter === '\\') {
+    return 'Absolute Path';
+  } else {
+    return 'Relative Path';
+  }
+}
+
+const absolutePath = '/home/user/documents/file.txt';
+const relativePath = '../images/image.jpg';
+
+console.log(determinePathType(absolutePath)); // Output: Absolute Path
+console.log(determinePathType(relativePath)); // Output: Relative Path
+```
+
+### 4. Retrieve information about the free memory and total memory available on your system using the OS module. 
+```js filename="P5_1.js"   copy
+const os = require('os');
+
+const totalMemory = os.totalmem();
+const freeMemory = os.freemem();
+
+console.log(`Total Memory: ${formatBytes(totalMemory)}`);
+console.log(`Free Memory: ${formatBytes(freeMemory)}`);
+
+// Function to format bytes into human-readable format (KB, MB, GB, etc.)
+function formatBytes(bytes) {
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+  if (bytes === 0) return '0 Byte';
+  const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+  return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+}
+```
+
+### 5 Create an event emitter instance and register a listener which calculates current date and time and display greeting based on time. 
+```js filename="P5_1.js"   copy
+const EventEmitter = require('events');
+
+class GreetingEmitter extends EventEmitter {}
+
+const greetingEmitter = new GreetingEmitter();
+
+greetingEmitter.on('greet', () => {
+  const now = new Date();
+  const currentDate = now.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+  const currentTime = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+
+  let greeting = '';
+  const currentHour = now.getHours();
+
+  if (currentHour >= 5 && currentHour < 12) {
+    greeting = 'Good Morning......';
+  } else if (currentHour >= 12 && currentHour < 17) {
+    greeting = 'Good Afternoon......';
+  } else {
+    greeting = 'Good Evening......';
+  }
+
+  console.log(`Today’s Date: ${currentDate}`);
+  console.log(`Current Time: ${currentTime}`);
+  console.log(greeting);
+});
+
+// Emit the 'greet' event
+greetingEmitter.emit('greet');
+
+```
+### 6 
