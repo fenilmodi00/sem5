@@ -43,7 +43,7 @@ const config: DocsThemeConfig = {
   
   docsRepositoryBase: 'https://github.com/fenilmodi00/sem5',
 
-  faviconGlyph : 'f',
+  faviconGlyph : '💀',
 
 
   useNextSeoProps() {
