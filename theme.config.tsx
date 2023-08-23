@@ -29,6 +29,7 @@ import { useConfig } from 'nextra-theme-docs'
 
 
 
+
 const config: DocsThemeConfig = {
   logo: <span>Fenil Modi </span>,
   project: {
@@ -42,7 +43,7 @@ const config: DocsThemeConfig = {
   
   docsRepositoryBase: 'https://github.com/fenilmodi00/sem5',
 
-  faviconGlyph : '🫠',
+  faviconGlyph : 'f',
 
 
   useNextSeoProps() {
@@ -55,12 +56,12 @@ const config: DocsThemeConfig = {
     const { asPath } = useRouter()
     const { frontMatter } = useConfig()
     return <>
-      <meta property="og:url" content={`https://sem4.co/${asPath}`} />
-      <meta property="og:title" content={frontMatter.title || 'UVPCE SEM-4|All practical answers 😁'} />
+      <meta property="og:url" content={`https://sem5.co/${asPath}`} />
+      <meta property="og:title" content={frontMatter.title || 'UVPCE SEM-5|All practical answers 😁'} />
       <meta property="og:description" content={frontMatter.description || 'Here You will get all practical answers of all subjects And also you can contribute here'} />
       <meta property="og:image" content="https://raw.githubusercontent.com/fenilmodi00/sem4/try/public/images/SEo.png?token=GHSAT0AAAAAAB7GRAVGFFGF2FWAUUPOEPDGZAK3K3Q" />
       <meta property="og:type" content="website" />
-      <meta property="og:site_name" content="UVPCE sem-4" />
+      <meta property="og:site_name" content="UVPCE sem-5" />
       <meta property="og:locale" content="en_US" />
       <meta property="og:image:width" content="300" />
       <meta property="og:image:height" content="200" />
