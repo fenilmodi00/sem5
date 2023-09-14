@@ -59,7 +59,7 @@ const config: DocsThemeConfig = {
       <meta property="og:url" content={`https://sem5.co/${asPath}`} />
       <meta property="og:title" content={frontMatter.title || 'UVPCE SEM-5|All practical answers 😁'} />
       <meta property="og:description" content={frontMatter.description || 'Here You will get all practical answers of all subjects And also you can contribute here'} />
-      <meta property="og:image" content="https://raw.githubusercontent.com/fenilmodi00/sem4/try/public/images/SEo.png?token=GHSAT0AAAAAAB7GRAVGFFGF2FWAUUPOEPDGZAK3K3Q" />
+      <meta property="og:image" content="https://raw.githubusercontent.com/fenilmodi00/sem5/main/.github/Screenshot%202023-09-14%20095827.png" />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content="UVPCE sem-5" />
       <meta property="og:locale" content="en_US" />
